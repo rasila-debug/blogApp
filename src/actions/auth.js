@@ -7,12 +7,12 @@ export const login=(uid,userName)=>({
 });
 export const startLogin =() =>{
     return() =>{        
-        return firebase.auth().signInWithRedirect(googleAuthProvider);
+        return firebase.auth().signInWithPopup(googleAuthProvider);
     }
 }
 export const startFacebookLogin =()=>{
     return()=>{
-        return firebase.auth().signInWithRedirect(facebookAuthProvider);
+        return firebase.auth().signInWithPopup(facebookAuthProvider);
     }
 }
 export const startEmailLogin =(email,password)=>{    
