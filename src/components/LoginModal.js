@@ -46,7 +46,14 @@ export class LoginModal extends React.Component{
         this.props.handleCloseModal();
        }
    }
-
+onGoogleLogin =()=>{
+    const token =this.props.startLogin();
+   !!token ?this.props.handleCloseModal() :'';    
+}
+onFacebooklogin = ()=>{
+    const token =this.props.startFacebookLogin();
+    !!token ?this.props.handleCloseModal() :'';    
+}
  render(){
         return(
             <Modal
@@ -60,12 +67,12 @@ export class LoginModal extends React.Component{
        
             <div className="box-layout__box">
             <h1 className="box-layout__title">My Blog</h1>
-                <button className="button" onClick={this.props.startLogin} >
+                <button className="button" onClick={this.onGoogleLogin} >
                     <i className="fa fa-google" aria-hidden="true">
                         <span className="box-layout_span">Login with Google</span>
                     </i>
                 </button>
-                <button className="button box-layout_button" onClick={this.props.startFacebookLogin}>
+                <button className="button box-layout_button" onClick={this.onFacebooklogin}>
                     <i className="fa fa-facebook-square" aria-hidden="true">
                         <span className="box-layout_span">Login with Facebook</span>
                     </i>

@@ -7,7 +7,6 @@ import PublicRoute from './PublicRoute';
 import AddBlogPage  from '../components/AddBlogPage';
 import DashboardPage from '../components/Dashboard';
 import EditBlogPage from '../components/EditBlogPage';
-import LoginPage from '../components/LoginPage';
 import NotFoundPage from '../components/NotFoundPage';
 import ReadBlog from '../components/ReadBlog';
 
@@ -17,8 +16,8 @@ const AppRouter =()=>(
     <div>
        
         <Switch>      
-            <PublicRoute path="/" component={DashboardPage} exact={true} />      
-            <PublicRoute path="/login" component={LoginPage} />  
+            <PublicRoute path="/" component={DashboardPage} exact={true} />     
+           
             <PublicRoute path="/read/:id" component={ReadBlog}/>           
             <PrivateRoute path="/create" component={AddBlogPage} />   
             <PrivateRoute path="/edit/:id" component={EditBlogPage} />  
