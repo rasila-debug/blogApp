@@ -1,22 +1,28 @@
-import Parse from 'html-react-parser';
+import rtrim  from 'rtrim';
+export default(string) =>{
+ 
+  const max_char =500;
+  let str = string.replace(/<(?:.|\n)*?>/gm, '\n').trim();
+  if(str.length > max_char) {
+    if(str.substr(0, max_char).indexOf(' ')) {
+      let string_args = str.split(" ");
+      let strArr = '';
 
-export default(blogBody) =>{
-    
-   const str= Parse(blogBody,{ trim: true });
-  
-    if(str.length <=2){
-        return str;
-    }  
-    
-   let i=0;
-    const arr = str.map((el) =>{  
-          if(i <=3){
-              i++;
-          
-            return el.props.children;;
+      for(let count = 0; count < string_args.length; count++) {
+          if((strArr + string_args[count]).length <= max_char) {
+          strArr += string_args[count]+' ';
+          } else {
+              break;
           }
-       
-    })
-   
-    return arr;
+      }
+      // return strArr.replace(/[\.,\s]$/, '...');
+      return rtrim(strArr, ' .,')+'...';
+  } else {
+      string = string.substr(0, max_char);
+      return rtrim(strArr, ' .,')+'...';
+  }
+} else {
+  return str;
+}
+  
 }
