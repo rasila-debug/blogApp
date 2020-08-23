@@ -1,0 +1,15 @@
+.header{
+    background: white;   
+    box-shadow: 5px 15px 10px -15px #111;   
+    margin-bottom: $m-size;
+}
+.header__content{
+    align-items: center;
+    display: flex;
+    justify-content:space-between;   
+    
+}
+.header__title{
+    color: $lime-green;     
+    text-decoration: none;        
+}
