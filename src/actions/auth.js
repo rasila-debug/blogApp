@@ -16,12 +16,18 @@ export const startFacebookLogin =()=>{
     }
 }
 export const startEmailLogin =(email,password)=>{    
-        return firebase.auth().signInWithEmailAndPassword(email,password);
-    
+    return firebase.auth().signInWithEmailAndPassword(email,password).then(()=>{
+        return firebase.auth().currentUser;
+    });
 }
+
 export const startEmailSignUp =(email,password) =>{   
-        return firebase.auth().createUserWithEmailAndPassword(email,password);
-    
+    return firebase.auth().createUserWithEmailAndPassword(email,password).then(()=>{
+        const user = firebase.auth().currentUser;       
+       user.sendEmailVerification();      
+       return user.email;
+    })
+  
 }
 export const logout =() =>({
     type :'LOGOUT'

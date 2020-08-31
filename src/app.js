@@ -29,15 +29,16 @@ const renderApp =() =>{
 
 ReactDOM.render(<LoadingPage/>,document.getElementById('app'));
 
-firebase.auth().onAuthStateChanged((user) =>{
-    if(user){  
-      
-        store.dispatch(login(user.uid,user.displayName));        
+firebase.auth().onAuthStateChanged((user) =>{  
+    if(user){ 
+        if(user.emailVerified){  
+             store.dispatch(login(user.uid,user.displayName));     
+         }   
         store.dispatch(startUserBlog()).then(()=>{
             renderApp();
         });
-         
-              history.push('/');
+   
+        history.push('/');
         
     }
     else{     

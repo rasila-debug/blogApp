@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import BlogForm from './BlogForm';
 import {startUpdateBlog,startRemoveBlog} from '../actions/blogAction';
 import DeletePostModal from './DeletePostModal';
+import BackToDashboard from './BackToDashboard';
 
 export class EditBlogPage extends React.Component{
     state ={
@@ -26,7 +27,10 @@ export class EditBlogPage extends React.Component{
       return(
         <div className="content-container">
             <div className="page-header">
-            <h1 className="page-header__title">Edit Post</h1>             
+               <div className="page-header__title">
+                    <h2>Edit Post</h2> 
+                    <BackToDashboard/>
+                    </div>                    
             </div>
             <div >
               <BlogForm onSubmit={this.onSubmit} {...this.props.blog} />

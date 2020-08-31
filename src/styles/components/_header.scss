@@ -11,5 +11,8 @@
 }
 .header__title{
     color: $lime-green;     
-    text-decoration: none;        
+    text-decoration: none; 
+    h1{
+        padding-left: $m-size;
+    }       
 }

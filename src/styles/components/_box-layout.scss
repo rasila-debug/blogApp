@@ -5,14 +5,28 @@
     display: flex;
     height: 100vh;
     justify-content: center;
-    width: 100vw;    
+    width: 100vw;      
+}
+
+div.logo{    
+   content: url('/images/favicon.png');
+    height:70px;  
+    width: 70px;
+   
+   
 }
 .box-layout__box{
+    align-items: center;
     background: fade-out(white,0.15);
-    border-radius: 3px;
-    padding: $s-size $m-size;
-    text-align: center;
+    border-radius:$radius;
+    display: flex;
+    flex-direction: column;
+    padding: $xs-size $s-size;
+
+    text-align: center;    
+  
     width:40rem;
+   
 }
 
 .box-layout__title{
@@ -24,5 +38,6 @@
   margin: $s-size 0;
 }
 .box-layout_span{
-    padding: 0 $s-size;
+    padding: 0 $s-size;  
+    align-items: center;
 }

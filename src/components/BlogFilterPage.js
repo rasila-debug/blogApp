@@ -9,7 +9,7 @@ export const BlogFilterPage =({setTitleFilter,searchByTitle,searchByAuthor,filte
         setTitleFilter(e.target.value);
     }
    const onSortChange =(e) =>{
-        if(e.target.value === 'title'){
+        if(e.target.value === 'title'){          
             searchByTitle();
         }else if(e.target.value === 'author'){
             searchByAuthor();
@@ -17,8 +17,8 @@ export const BlogFilterPage =({setTitleFilter,searchByTitle,searchByAuthor,filte
            
     }
    
-        return(
-            <div className="content-container">           
+        return( 
+            <div className="content-container">                 
                 <div className="input-group">              
                     <div className="input-group__item">
                         <input 

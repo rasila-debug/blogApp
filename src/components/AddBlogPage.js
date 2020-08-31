@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {startAddBlog} from '../actions/blogAction';
 import BlogForm from './BlogForm';
+import BackToDashboard from './BackToDashboard';
 
 export class AddBlogPage extends React.Component{
     onSubmit = (blog) =>{
@@ -11,7 +12,12 @@ export class AddBlogPage extends React.Component{
     render(){
         return(
             <div className="content-container">
-                <div className="page-header"><h1 className="page-header__title">Add Post</h1> </div>
+                <div className="page-header">      
+                    <div className="page-header__title">
+                    <h2>Add Post</h2> 
+                    <BackToDashboard/>
+                    </div> 
+                </div>
                 <BlogForm onSubmit={this.onSubmit} />
             </div>
         );

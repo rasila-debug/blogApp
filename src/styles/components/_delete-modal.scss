@@ -17,39 +17,96 @@
     opacity: 0;
   }
   
-  .modal {
- 
+  .modal { 
+    align-items: center;    
     background:white;
     border: 1px solid #cacccd;
+    border-radius: $radius;
     max-width: 50rem;
-    padding: $l-size;
+    padding: $s-size;
     text-align: center;
     outline: none;
   }
+  .modal__header{
+    justify-content:center;
+    display: flex;
   
+    position: relative;
+  }
   .modal__title {
     margin: 0 0 $m-size 0;
   }
   
   .modal__body {
     font-size: 2rem;
-    font-weight: 300;
-    margin: 0 0 $l-size 0;
-    word-break: break-all;
+    font-weight: 300; 
+    flex-grow: 1; 
+    // margin: 0 0 $l-size 0;    
+    word-break: break-all;   
   }
-  .modal_input
-  {
+  
+  
+  .modal_button {	
+    background: white;
+    border-radius:$radius;
+    border:1px solid $grey;    
+    cursor:pointer;
+    color:$grey;
+    display:block;
+    font-size:$font-size-medium;
+    font-weight: 400px;
+    width: 250px;   
+    margin-bottom: $s-size;
+    padding:$xs-size;	    
+    text-align: center;
+    &:hover{
+      color: $dark-grey;
+    }
+  }
+  .modal__cross_btn{  
+    padding: 0;
+  margin: 0;
+  background: transparent;
+  border: 0;
+  position: absolute;
+  right: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  }
+  .modal_button:active {
+    position:relative;
+    top:1px;
+  } 
+  .modal__input{
     border: 1px solid #cacccd;
-    height: 50px;
-    font-size: $font-size-small;   
+    border-radius:$radius;
+    height: 45px;
+    font-size: $font-size-medium;
+    font-weight: 300;
     padding: $s-size;
-    margin: $xs-size 0;
+    width: 250px;
+}
+.modal__select{
+    @extend .modal__input;  
+    margin-bottom: $s-size;  
+}
+.modal__form-error{
+  margin: 0 0 $m-size 0;
+  font-style: italic;
+  color: red;
+  font-size: $m-size;
+  width: 240px;
+  word-break: break-all;
+}
+  .google_logo{
+    content: url('/images/icons8-google-64.png');
+    height:20px;  
+    width: 20px;   
+    vertical-align: middle;    
   }
-  .modal_select{
-    @extend .modal_input;  
+  .facebook_logo{
+    content: url('/images/icons8-facebook-48.png');
+    height:25px;  
+    width: 25px;   
+    vertical-align: middle;    
   }
-  .modal_select option{
-    line-height: 1px;
-  }
-  
-  

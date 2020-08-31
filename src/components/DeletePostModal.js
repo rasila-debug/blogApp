@@ -12,12 +12,15 @@ const DeletePostModal =(props)=>{
            contentLabel="Delete Post"
            className="modal"
         >
-          <div>
+          <>
             <h3 className="modal__title">Delete Post</h3>
             <p className="modal__body">Are you sure want to delete post ?</p>
-            <button className="button" onClick={props.onRemove}>Delete</button>
-            <button onClick={props.isClose} className="button--secondary ">Cancel</button>           
-          </div>
+            <div className="button-group">
+              <button className="button" onClick={props.onRemove}>Delete</button>
+              <button onClick={props.isClose} className="button">Cancel</button>  
+            </div>
+                     
+          </>
           
         </Modal>
         

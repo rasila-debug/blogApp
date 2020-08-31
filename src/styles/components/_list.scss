@@ -1,35 +1,21 @@
-.list-header{
-    background: $off-white;
-    border: 1px solid darken($off-white,7%);
-    color: $grey;
-    display: flex;
-    justify-content: space-between;
-    padding: $s-size $m-size;
-}
-.list-body {
-    margin-bottom: $m-size;
-    @media (min-width: $desktop-breakpoint) {
-      margin-bottom: $l-size;
-    }
-}
+
+
 .list-item {
-    border-left: 2px solid darken($off-white, 7%);
-    background: $off-white;
-    color: $dark-grey;
+    border: 1px solid darken($off-white, 7%);
+    border-radius:$radius;
+    background:white;   
     display: block;
-    flex-direction: column;
-    margin-bottom: $s-size;
+    flex-direction: column;    
     padding: $s-size;
     text-decoration: none;
-    transition: background .3s ease;
-    &:hover {
-      background:white;
-    }
+    transition: background .3s ease; 
+    margin-bottom: $m-size;
     @media (min-width: $desktop-breakpoint) {
       align-items: center;
+      margin-bottom: $m-size;
       flex-direction: row;
-      justify-content: space-between;
-      padding: $m-size;
+      justify-content: space-between;      
+      padding: $s-size;
     }
   }
   .list-item--message {
@@ -41,17 +27,15 @@
       background: none;
     }
   }
-  
   .list-item__title {
+    color: $dark-grey;
     margin: 0;
     word-break: break-all;
+    text-decoration: none;
+    &:hover {
+      color: $lime-green;
+    }
   }
-  
-  .list-item__sub-title {
-    color: $grey;  
-    font-size: $s-size;
-  }
-  
   .list-item__data {
     margin: $s-size 0 0 0;
     color: $grey;  
@@ -62,9 +46,12 @@
      
     }
   }
-  .list-item__text{
-    display: flex;
-    justify-content: space-between;    
-    margin: $m-size 0;
+  .list-item__sub-title {
+    color: $dark-grey;
+    font-size: $m-size;    
+    margin: $s-size 0;
+    span{
+      color: $dark-grey;
+      font-style: italic;
+    }
   }
- 

@@ -6,19 +6,30 @@ import {startLogin,startFacebookLogin,startEmailLogin,startEmailSignUp} from '..
 export class LoginModal extends React.Component{
    state={
        mode:'SIGNIN',
-       error:''
+       error:'',
+       toggleDiv:false
    }
    onModeChange =(e)=>{
        const mode = e.target.value
        this.setState({mode})
+       this.setState({error: ''})
+    
    }
    onEmailSubmit = (e) =>{
-       e.preventDefault();
+    this.setState({error: ''})
+       e.preventDefault();     
        const email = e.target.email.value;
-       const password = e.target.password.value;
-       if(this.state.mode === 'SIGNIN'){
-          const result=  startEmailLogin(email,password)         
-            .catch((error)=>{      
+       const password = e.target.password.value;     
+       if(this.state.mode === 'SIGNIN'){          
+          startEmailLogin(email,password).then((user)=>{
+            if(user.emailVerified === false){
+                this.setState({error: 'Email address is not verified. please verify your email address.'})
+              }
+              else{
+                this.setState({error: ''})
+                this.props.handleCloseModal();
+              }
+          }).catch((error)=>{
                 let errorCode = error.code;
                 let errorMessage = error.message;      
                 if(errorCode === 'auth/user-not-found'){
@@ -29,30 +40,35 @@ export class LoginModal extends React.Component{
                    this.setState({error: 'You have attempted to login too many times. Try again later.'})
                 }else if (errorCode === 'auth/invalid-email') {
                     this.setState({error: 'Enter a valid email address.'})
-                }else {
+                }else {                   
                     this.setState({error: errorMessage})
                 }                    
-            })            
+            })
+                   
        }
-       else if(this.state.mode === 'CREATE'){
-          const result = startEmailSignUp(email,password)
-           .catch((e)=>{
-               this.setState({error : e.message})
-           })
+       else if(this.state.mode === 'CREATE'){   
+           startEmailSignUp(email,password).then((user)=>{
+              window.alert('Verification email send to your email address.');
+              this.setState({error: ''})
+              this.props.handleCloseModal();
+           }).catch((e)=>{
+                    this.setState({error : e.message})
+            })
+      
        }
        e.target.email.value="";
-       e.target.password.value="";
-       if(!!this.state.error){         
-        this.props.handleCloseModal();
-       }
+       e.target.password.value="";     
    }
 onGoogleLogin =()=>{
-    const token =this.props.startLogin();
-   !!token ?this.props.handleCloseModal() :'';    
+    this.props.startLogin().then((res)=>{
+        !!res?this.props.handleCloseModal():'';
+    })     
+   
 }
 onFacebooklogin = ()=>{
-    const token =this.props.startFacebookLogin();
-    !!token ?this.props.handleCloseModal() :'';    
+    this.props.startFacebookLogin().then((res)=>{
+        !!res?this.props.handleCloseModal():'';
+    })      
 }
  render(){
         return(
@@ -64,45 +80,44 @@ onFacebooklogin = ()=>{
             className='modal'
             appElement={app}
            >
-       
+            <div className="modal__header">
+                 <div className="logo">  </div>
+                 <button className="modal__cross_btn" onClick={this.props.handleCloseModal}>X</button>
+             </div>
             <div className="box-layout__box">
-            <h1 className="box-layout__title">My Blog</h1>
-                <button className="button" onClick={this.onGoogleLogin} >
-                    <i className="fa fa-google" aria-hidden="true">
-                        <span className="box-layout_span">Login with Google</span>
-                    </i>
+                <button className="modal_button" onClick={this.onGoogleLogin} >
+                    <i className="google_logo" aria-hidden="true"></i>
+                    <span className="box-layout_span">Sign in with Google</span>
                 </button>
-                <button className="button box-layout_button" onClick={this.onFacebooklogin}>
-                    <i className="fa fa-facebook-square" aria-hidden="true">
-                        <span className="box-layout_span">Login with Facebook</span>
-                    </i>
+                <button className="modal_button" onClick={this.onFacebooklogin}>
+                     <i className="facebook_logo" aria-hidden="true"> </i>
+                    <span className="box-layout_span">Sign in with Facebook</span>
                 </button>
-                <h3 className='modal__title'>SignIn or SignUp to My Blog</h3>
-                {this.state.error !=='' ?<p className="form__error">{this.state.error}</p>:''}
-                <div className="content-container">
-                    <select className="modal_select" onChange={this.onModeChange}>
+            <div className="modal__body">
+            <h3 className='modal__title'>SignIn or SignUp </h3> 
+            {this.state.error !=='' ?<p className="modal__form-error">{this.state.error}</p>:''}
+               
+                    <select className="modal__select" onChange={this.onModeChange}>
                         <option value='SIGNIN'>SignIn</option>
                         <option value='CREATE'>Create an account</option>
                     </select>
                     <form className="form" onSubmit={this.onEmailSubmit}>
-                        <input className='modal_input' type='email' id='email' 
+                    <input className='modal__input' type='email' id='email' 
                             placeholder='you@example.com' required
-                           />
-                        <input className='modal_input' type='password' id='password' 
-                            placeholder='Password' 
-                            minLength='6' 
-                            required
-                             />
-                        <button className='button'>Submit</button>
+                            />
+                            <input className='modal__input' type='password' id='password' 
+                                placeholder='Password' 
+                                minLength='6' 
+                                required
+                                    />
+                       
+                        <button className='modal_button'>Login</button>
                        
                     </form>
-                </div>
-
-       
-      </div>
-      {/* <LoginModal loginpopup={this.state.loginPrompt} handleCloseModal={this.handleCloseLoginModal} /> */}
-   
-           </Modal>
+            </div>
+                
+            </div>
+        </Modal>
         
         );
         

@@ -1,5 +1,4 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import LoginModal from './LoginModal';
 import {startLogout} from '../actions/auth';
@@ -17,26 +16,24 @@ export class Header extends React.Component{
       }
     render(){
         return(
-            <header className="header">
-            <div className="content-container">
+        <header className="header">
                 <div className="header__content">
-                    <Link  className="header__title" to="/"><h1>My Blog</h1></Link>             
+                <div className="logo">  </div>               
                     { !!this.props.uid ?
                             (
                                 <div>
                                      <span className="header__title">{this.props.userName}</span>   
-                                <button className="button--link" onClick={this.props.startLogout}>Logout</button>
+                                <button className="button" onClick={this.props.startLogout}>Logout</button>
                                 </div>
                             ) :(
-                                <button className="button--link" onClick={this.handleOpenLoginModal}>Login</button>
+                                <button className="button" onClick={this.handleOpenLoginModal}>Login</button>
                                 ) 
                             
                     }
                     
                 </div>
                 <LoginModal loginpopup={this.state.loginPrompt} handleCloseModal={this.handleCloseLoginModal} />
-            </div>
-            </header>
+         </header>
         );
     }
 }
