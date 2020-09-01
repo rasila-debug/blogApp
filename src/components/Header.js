@@ -22,7 +22,7 @@ export class Header extends React.Component{
                     { !!this.props.uid ?
                             (
                                 <div>
-                                     <span className="header__title">{this.props.userName}</span>   
+                                     <span className="header__title">{`Hello ${this.props.userName}`}</span>   
                                 <button className="button" onClick={this.props.startLogout}>Logout</button>
                                 </div>
                             ) :(

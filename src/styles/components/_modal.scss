@@ -27,6 +27,19 @@
     text-align: center;
     outline: none;
   }
+  .alertModal{
+    @extend .modal;
+    padding: $l-size; 
+    button{
+      top:-15px;
+      right:-15px
+    }
+    span{
+      display: block;
+      font-size: $font-size-medium;
+    }
+  }
+
   .modal__header{
     justify-content:center;
     display: flex;
@@ -40,8 +53,7 @@
   .modal__body {
     font-size: 2rem;
     font-weight: 300; 
-    flex-grow: 1; 
-    // margin: 0 0 $l-size 0;    
+    flex-grow: 1;     
     word-break: break-all;   
   }
   
@@ -49,7 +61,7 @@
   .modal_button {	
     background: white;
     border-radius:$radius;
-    border:1px solid $grey;    
+    border: 1px solid #cacccd; 
     cursor:pointer;
     color:$grey;
     display:block;
@@ -64,10 +76,11 @@
     }
   }
   .modal__cross_btn{  
-    padding: 0;
+    padding:5px;
   margin: 0;
   background: transparent;
-  border: 0;
+  border: 1px solid $dark-grey;
+  border-radius: $radius;
   position: absolute;
   right: 10px;
   font-weight: bold;
@@ -99,14 +112,15 @@
   word-break: break-all;
 }
   .google_logo{
-    content: url('/images/icons8-google-64.png');
+    content: url('/images/icon-google.png');
     height:20px;  
     width: 20px;   
     vertical-align: middle;    
   }
   .facebook_logo{
-    content: url('/images/icons8-facebook-48.png');
-    height:25px;  
-    width: 25px;   
+    content: url('/images/icon-facebook.png');
+    height:20px;  
+    width: 20px;   
     vertical-align: middle;    
   }
+ 

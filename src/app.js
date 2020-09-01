@@ -32,7 +32,8 @@ ReactDOM.render(<LoadingPage/>,document.getElementById('app'));
 firebase.auth().onAuthStateChanged((user) =>{  
     if(user){ 
         if(user.emailVerified){  
-             store.dispatch(login(user.uid,user.displayName));     
+            const userName = user.displayName === null ? 'User' : user.displayName;
+             store.dispatch(login(user.uid,userName));     
          }   
         store.dispatch(startUserBlog()).then(()=>{
             renderApp();

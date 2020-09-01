@@ -9,9 +9,7 @@ export default (blogs,{title='',searchBy='title'})=>{
                 const authorMatch= blog.author.toLowerCase().includes(title.toLowerCase().trim());
                 return authorMatch;
             }
-       
-        
+    }).sort((a,b) =>{
+        return a.createdAt < b.createdAt ? 1 : -1;
     })
- 
- 
 }

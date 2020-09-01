@@ -3,12 +3,20 @@ import Modal from 'react-modal';
 import {connect} from 'react-redux';
 import {startLogin,startFacebookLogin,startEmailLogin,startEmailSignUp} from '../actions/auth';
 
+Modal.setAppElement('#app')
 export class LoginModal extends React.Component{
    state={
        mode:'SIGNIN',
        error:'',
-       toggleDiv:false
+       alert:undefined
+     
    }
+   openAlertModal=()=>{
+    this.setState({alert:true});
+  }
+  closeAlertModal=()=>{
+    this.setState({alert:undefined})
+  }
    onModeChange =(e)=>{
        const mode = e.target.value
        this.setState({mode})
@@ -47,9 +55,9 @@ export class LoginModal extends React.Component{
                    
        }
        else if(this.state.mode === 'CREATE'){   
-           startEmailSignUp(email,password).then((user)=>{
-              window.alert('Verification email send to your email address.');
-              this.setState({error: ''})
+           startEmailSignUp(email,password).then((user)=>{                        
+              this.setState({error: '',email})
+              this.openAlertModal();  
               this.props.handleCloseModal();
            }).catch((e)=>{
                     this.setState({error : e.message})
@@ -62,6 +70,15 @@ export class LoginModal extends React.Component{
 onGoogleLogin =()=>{
     this.props.startLogin().then((res)=>{
         !!res?this.props.handleCloseModal():'';
+    }).catch((error)=>{
+        let errorCode = error.code;
+        let errorMessage = error.message;      
+        if(errorCode === 'auth/account-exists-with-different-credential'){
+           this.setState({error :errorMessage})
+         }else {                   
+            this.setState({error: errorMessage})
+        }
+        
     })     
    
 }
@@ -70,20 +87,22 @@ onFacebooklogin = ()=>{
         !!res?this.props.handleCloseModal():'';
     })      
 }
+
  render(){
         return(
+            <div>
             <Modal
             isOpen={!!this.props.loginpopup}
             onRequestClose={this.props.handleCloseModal}
             contentLabel="Email Sign up"
             closeTimeoutMS={200}
-            className='modal'
-            appElement={app}
+            className='modal'           
            >
             <div className="modal__header">
                  <div className="logo">  </div>
                  <button className="modal__cross_btn" onClick={this.props.handleCloseModal}>X</button>
              </div>
+             <div className="modal__body">
             <div className="box-layout__box">
                 <button className="modal_button" onClick={this.onGoogleLogin} >
                     <i className="google_logo" aria-hidden="true"></i>
@@ -93,25 +112,31 @@ onFacebooklogin = ()=>{
                      <i className="facebook_logo" aria-hidden="true"> </i>
                     <span className="box-layout_span">Sign in with Facebook</span>
                 </button>
-            <div className="modal__body">
-            <h3 className='modal__title'>SignIn or SignUp </h3> 
+              
+                
+           
+            <h3 className='modal__title'>Sign in or Sign up with email</h3> 
             {this.state.error !=='' ?<p className="modal__form-error">{this.state.error}</p>:''}
                
                     <select className="modal__select" onChange={this.onModeChange}>
                         <option value='SIGNIN'>SignIn</option>
-                        <option value='CREATE'>Create an account</option>
+                        <option value='CREATE'>Create account</option>
                     </select>
                     <form className="form" onSubmit={this.onEmailSubmit}>
-                    <input className='modal__input' type='email' id='email' 
+                        <input className='modal__input' type='email' id='email' 
                             placeholder='you@example.com' required
-                            />
-                            <input className='modal__input' type='password' id='password' 
+                        />
+                        <input className='modal__input' type='password' id='password' 
                                 placeholder='Password' 
                                 minLength='6' 
                                 required
-                                    />
+                                  />
                        
-                        <button className='modal_button'>Login</button>
+                        <button className='modal_button'>
+                            {
+                                this.state.mode === 'SIGNIN' ?'Continue':'Create account'
+                            }
+                        </button>
                        
                     </form>
             </div>
@@ -119,6 +144,33 @@ onFacebooklogin = ()=>{
             </div>
         </Modal>
         
+            <Modal
+                isOpen={!!this.state.alert}
+                onRequestClose={this.closeAlertModal}
+                contentLabel="Email Verification"
+                closeTimeoutMS={200}
+                className='alertModal'
+                appElement={app}
+                >
+                     <div className="modal__header">
+                     <button className="modal__cross_btn" onClick={this.closeAlertModal}>X</button> 
+                    </div>        
+                    <div className="modal__body">                           
+                        <h4 className='modal__title'>Check your inbox</h4>
+                        <span>Click the verification link we just sent</span>
+                        <span>Email :{this.state.email}</span> 
+                    </div>        
+                          
+               
+                      
+                       
+                        
+                        
+                      
+                        
+                      
+            </Modal>
+        </div>
         );
         
     }
