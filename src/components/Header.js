@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import LoginModal from './LoginModal';
 import {startLogout} from '../actions/auth';
@@ -9,7 +10,7 @@ export class Header extends React.Component{
         loginPrompt :undefined
       }
       handleOpenLoginModal=()=>{
-        this.setState({loginPrompt:true});
+        this.setState({loginPrompt:true});       
       }
       handleCloseLoginModal=()=>{
         this.setState({loginPrompt:undefined})
@@ -32,7 +33,7 @@ export class Header extends React.Component{
                     }
                     
                 </div>
-                <LoginModal loginpopup={this.state.loginPrompt} handleCloseModal={this.handleCloseLoginModal} />
+                <LoginModal loginpopup={this.state.loginPrompt} handleCloseLoginModal={this.handleCloseLoginModal}/>
          </header>
         );
     }

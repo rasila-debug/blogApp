@@ -1,7 +1,7 @@
 import rtrim  from 'rtrim';
 export default(string) =>{
  
-  const max_char =500;
+  const max_char =350;
   let str = string.replace(/<(?:.|\n)*?>/gm, '\n').trim();
   if(str.length > max_char) {
     if(str.substr(0, max_char).indexOf(' ')) {

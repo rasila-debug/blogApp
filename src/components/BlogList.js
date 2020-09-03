@@ -1,62 +1,45 @@
-import React from 'react';
+import React,{ useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import BlogListItem from './BlogListItem';
 import SelectFilterBlog from '../selectors/blog';
 import ReactPaginate from 'react-paginate';
 
-export class BlogList extends React.Component{
-    constructor(props){
-        super(props);
-        this.state={
-            offset:0,
-            dataSlice:[],
-            perPage:3,
-            currentPage:0
-            // pageCount:0,
-            // dataSlice2:[]
-        }
+export const BlogList =(props)=>{
+    const postData=props.blogs;  
+    const [data,setData]=useState([]);
+    const [offset,setOffset] =useState(0);
+    const [perPage,setPerpage]=useState(3);
+    const [currentPage,setCurrentPage]=useState(0);
+    const [pageCount,setPageCount]=useState(0);
+   
+    
+    const receivedData=()=>{
+        const slice =postData.slice(offset, offset + perPage)           
+        setPageCount(Math.ceil(postData.length / perPage))
+        setData(slice)      
+      //+++++++++++++++++++++++++++
+     
     }
-    receivedData=()=>{      
-        const data=this.props.blogs;      
-        const slice =data.slice(this.state.offset, this.state.offset + this.state.perPage)  
-        this.setState({
-            pageCount:Math.ceil(data.length / this.state.perPage),
-            dataSlice:slice
-        })
-       
-    }
-    handlePageClick=(e)=>{
+    const handlePageClick=(e)=>{        
         const selectedPage = e.selected;
-        const offset = selectedPage * this.state.perPage;
+        const offset = selectedPage * perPage;
+        setCurrentPage(selectedPage);
+        setOffset(offset);             
+    }
+    useEffect(()=>{       
+       receivedData();     
+    },[currentPage,props.blogs])  
 
-        this.setState({
-            currentPage:selectedPage,
-            offset:offset
-        },()=>{
-            this.receivedData()
-        });
-    }
-    componentDidMount(){
-        this.receivedData()
-    }componentDidUpdate(prevProps, prevState) {
-        if(this.props.blogs !== prevProps.blogs){
-            this.receivedData()
-        }
-        
-    }
-    render(){
-        return(
-            
-            <div className="content-container"> 
+    return(            
+            <div className="content-container">          
             {
-                this.state.dataSlice.length === 0 ?(
+               data.length === 0 ?(
                    <div className="list-item list-item--message">
                     <span>No Post</span>
                    </div>
                 ):( 
-                  
-                         this.state.dataSlice.map((blog) =>{                 
-                        return <BlogListItem key={blog.id}  {...blog} authID={this.props.authID} />
+                        data.map((blog) =>{                 
+                        return <BlogListItem key={blog.id}  {...blog} authID={props.authID} />
                     })
                 )
                 
@@ -66,10 +49,10 @@ export class BlogList extends React.Component{
                     nextLabel={"next"}
                     breakLabel={"..."}
                     breakClassName={"break-me"}
-                    pageCount={this.state.pageCount}
+                    pageCount={pageCount}
                     marginPagesDisplayed={2}
                     pageRangeDisplayed={5}
-                    onPageChange={this.handlePageClick}
+                    onPageChange={handlePageClick}
                     containerClassName={"pagination"}
                     subContainerClassName={"pages pagination"}
                     activeClassName={"active"}/>
@@ -77,8 +60,6 @@ export class BlogList extends React.Component{
         </div> 
         
         );
-    }
-   
 }
 const mapStateToProps =(state) =>({    
     blogs:SelectFilterBlog(state.blogs,state.filters),
@@ -87,13 +68,3 @@ const mapStateToProps =(state) =>({
 
 export default connect(mapStateToProps)(BlogList);
 
-// this.props.blogs.length === 0 ?
-// ( 
-//     <div className="list-item list-item--message">
-//     <span>No Post</span>
-//     </div>
-// ):(               
-//    this.props.blogs.map((blog) =>{                 
-//     return <BlogListItem key={blog.id}  {...blog} authID={this.props.authID} />
-// })
-// )

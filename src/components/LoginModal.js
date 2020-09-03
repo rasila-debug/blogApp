@@ -1,64 +1,59 @@
 import React from 'react';
 import Modal from 'react-modal';
 import {connect} from 'react-redux';
+import setError from '../selectors/error';
 import {startLogin,startFacebookLogin,startEmailLogin,startEmailSignUp} from '../actions/auth';
 
 Modal.setAppElement('#app')
 export class LoginModal extends React.Component{
+   
    state={
        mode:'SIGNIN',
        error:'',
        alert:undefined
      
    }
+  
    openAlertModal=()=>{
     this.setState({alert:true});
   }
   closeAlertModal=()=>{
     this.setState({alert:undefined})
   }
+  clearError=()=>{
+    this.setState({error: ''})
+  }
    onModeChange =(e)=>{
        const mode = e.target.value
        this.setState({mode})
-       this.setState({error: ''})
-    
+       this.clearError();    
    }
-   onEmailSubmit = (e) =>{
-    this.setState({error: ''})
+   onEmailSubmit = (e) =>{   
        e.preventDefault();     
        const email = e.target.email.value;
        const password = e.target.password.value;     
        if(this.state.mode === 'SIGNIN'){          
-          startEmailLogin(email,password).then((user)=>{
-            if(user.emailVerified === false){
-                this.setState({error: 'Email address is not verified. please verify your email address.'})
+          startEmailLogin(email,password).then((user)=>{            
+              if(user){
+                if(user.emailVerified === false){
+                    this.setState({error: 'Email address is not verified. please verify your email address.'})
+                  }
+                  else{
+                    this.clearError(); 
+                    this.props.handleCloseLoginModal();
+                  }
               }
-              else{
-                this.setState({error: ''})
-                this.props.handleCloseModal();
-              }
-          }).catch((error)=>{
-                let errorCode = error.code;
-                let errorMessage = error.message;      
-                if(errorCode === 'auth/user-not-found'){
-                    this.setState({error :'Email address not register.Create an account or try again'})
-                }else if(errorCode === 'auth/wrong-password'){
-                    this.setState({error :'Enter the wrong password.Try again.'})
-                }else if (errorCode === 'auth/too-many-requests'){ 
-                   this.setState({error: 'You have attempted to login too many times. Try again later.'})
-                }else if (errorCode === 'auth/invalid-email') {
-                    this.setState({error: 'Enter a valid email address.'})
-                }else {                   
-                    this.setState({error: errorMessage})
-                }                    
+            
+          }).catch((e)=>{
+                this.setState({error:setError(e)})
             })
-                   
+           
        }
        else if(this.state.mode === 'CREATE'){   
            startEmailSignUp(email,password).then((user)=>{                        
-              this.setState({error: '',email})
+              this.setState({error: '',email,mode:'SIGNIN'})
               this.openAlertModal();  
-              this.props.handleCloseModal();
+              this.props.handleCloseLoginModal();
            }).catch((e)=>{
                     this.setState({error : e.message})
             })
@@ -66,41 +61,38 @@ export class LoginModal extends React.Component{
        }
        e.target.email.value="";
        e.target.password.value="";     
+       this.clearError(); 
    }
 onGoogleLogin =()=>{
     this.props.startLogin().then((res)=>{
-        !!res?this.props.handleCloseModal():'';
-    }).catch((error)=>{
-        let errorCode = error.code;
-        let errorMessage = error.message;      
-        if(errorCode === 'auth/account-exists-with-different-credential'){
-           this.setState({error :errorMessage})
-         }else {                   
-            this.setState({error: errorMessage})
-        }
-        
-    })     
-   
+        !!res?this.props.handleCloseLoginModal():'';
+    }).catch((e)=>{
+        this.setState({error:setError(e)})
+    })
 }
 onFacebooklogin = ()=>{
     this.props.startFacebookLogin().then((res)=>{
-        !!res?this.props.handleCloseModal():'';
-    })      
+        !!res?this.props.handleCloseLoginModal():'';
+    }).catch((e)=>{
+        this.setState({error:setError(e)})
+    })   
 }
 
  render(){
         return(
             <div>
+           
             <Modal
             isOpen={!!this.props.loginpopup}
-            onRequestClose={this.props.handleCloseModal}
+            onRequestClose={this.props.handleCloseLoginModal}
             contentLabel="Email Sign up"
             closeTimeoutMS={200}
             className='modal'           
            >
             <div className="modal__header">
                  <div className="logo">  </div>
-                 <button className="modal__cross_btn" onClick={this.props.handleCloseModal}>X</button>
+                
+                 <button className="modal__cross_btn" onClick={this.props.handleCloseLoginModal}>X</button>
              </div>
              <div className="modal__body">
             <div className="box-layout__box">
@@ -133,9 +125,10 @@ onFacebooklogin = ()=>{
                                   />
                        
                         <button className='modal_button'>
-                            {
-                                this.state.mode === 'SIGNIN' ?'Continue':'Create account'
-                            }
+                           
+                            {this.state.mode === 'SIGNIN' ?'Continue':'Create account'}
+                                
+                            
                         </button>
                        
                     </form>

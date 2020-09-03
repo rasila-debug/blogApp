@@ -3,7 +3,6 @@ import {Router,Route,Switch,Link ,NavLink} from 'react-router-dom';
 import createHistory from 'history/createBrowserHistory';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
-
 import AddBlogPage  from '../components/AddBlogPage';
 import DashboardPage from '../components/Dashboard';
 import EditBlogPage from '../components/EditBlogPage';

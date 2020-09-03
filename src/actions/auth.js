@@ -18,7 +18,7 @@ export const startFacebookLogin =()=>{
 export const startEmailLogin =(email,password)=>{    
     return firebase.auth().signInWithEmailAndPassword(email,password).then(()=>{
         return firebase.auth().currentUser;
-    });
+    })
 }
 
 export const startEmailSignUp =(email,password) =>{   
@@ -27,7 +27,6 @@ export const startEmailSignUp =(email,password) =>{
        user.sendEmailVerification();      
        return user.email;
     })
-  
 }
 export const logout =() =>({
     type :'LOGOUT'
