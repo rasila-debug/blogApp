@@ -14,7 +14,13 @@ export const BlogList =(props)=>{
    
     
     const receivedData=()=>{
-        const slice =postData.slice(offset, offset + perPage)           
+        let slice=[];
+        if(postData.length ===1){
+            slice = postData;
+        }
+        else{
+             slice =postData.slice(offset, offset + perPage)
+        }
         setPageCount(Math.ceil(postData.length / perPage))
         setData(slice)      
       //+++++++++++++++++++++++++++
@@ -27,13 +33,15 @@ export const BlogList =(props)=>{
         setOffset(offset);             
     }
     useEffect(()=>{       
-       receivedData();     
+       receivedData(); 
     },[currentPage,props.blogs])  
 
-    return(            
+    return(   
+       
+               
             <div className="content-container">          
-            {
-               data.length === 0 ?(
+            { 
+                (data.length === 0) ?( 
                    <div className="list-item list-item--message">
                     <span>No Post</span>
                    </div>
@@ -43,7 +51,7 @@ export const BlogList =(props)=>{
                     })
                 )
                 
-            }
+            }       
            <ReactPaginate
                     previousLabel={"prev"}
                     nextLabel={"next"}

@@ -63,8 +63,7 @@ export const listBlog = (blogs) =>({
 
 export const startUserBlog = () =>{
     return (dispatch,getState) => { 
-        const uid = getState().auth.uid; 
-       
+        const uid = getState().auth.uid;       
         let query="";
         const ref =database.ref();
 

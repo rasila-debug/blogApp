@@ -7,7 +7,8 @@ import Header from './Header';
 import BackToDashboard from './BackToDashboard';
 export const ReadBlog =(props) =>(
     <div>
-        <Header />        
+        <Header />   
+        {console.log(props.blog.id)}     
         <div className="content-container">
         <div className="page-header">
              <div className="page-header__title">
