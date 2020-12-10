@@ -9,6 +9,7 @@ export default (state = blogReducerDefaultState,action)=>{
             ]
         case 'REMOVE_BLOG':
             return state.filter(({id}) =>id !== action.id)
+            
         case 'EDIT_BLOG':           
             return state.map((blog) =>{
                 if(blog.id === action.id){

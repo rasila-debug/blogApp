@@ -39,7 +39,7 @@ export const startRemoveBlog =({id}={}) =>{
     }
 }
 
-//EDIT_EXPENSE
+//EDIT_BLOG
 export const editBlog =(id,updates)=>({    
     type:'EDIT_BLOG',
     id,
@@ -55,7 +55,7 @@ export const startUpdateBlog = (id,updates)=>{
 }
 
 
-//SET_EXPENSES
+//BLOG_LIST
 export const listBlog = (blogs) =>({
     type:'LIST_BLOG',
     blogs
