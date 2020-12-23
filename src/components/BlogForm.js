@@ -4,6 +4,7 @@ import moment from 'moment';
 import Quill from './Quill';
 import xss from 'xss';
 export const BlogForm =({onSubmit,title,body,author,createdAt})=>{
+   // console.log(title)
     const [blogTitle,setTitle] = useState(title || '');
     const [blogBody, setBody] = useState(body || '');
     const [blogCreatedAt] = useState(createdAt || moment());

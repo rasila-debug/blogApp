@@ -33,21 +33,17 @@ firebase.auth().onAuthStateChanged((user) =>{
     if(user){ 
         if(user.emailVerified){  
             const userName = user.displayName === null ? 'User' : user.displayName;
-             store.dispatch(login(user.uid,userName));     
-         }   
-        store.dispatch(startUserBlog()).then(()=>{
-            renderApp();
-        });
-   
-        history.push('/');
-        
+            store.dispatch(login(user.uid,userName));     
+         } 
     }
     else{     
         store.dispatch(logout());          
-        store.dispatch(startUserBlog()).then(()=>{
-            renderApp();
-        });
-        history.push('/');
+        
     }
+    store.dispatch(startUserBlog()).then(()=>{
+        renderApp();
+    });
+    history.push('/');
 })
+
 

@@ -1,15 +1,16 @@
 
 
 const filterReducerDefaultState ={
-    title:'',
+    text:'',
     searchBy:'title'
 }
 export default (state = filterReducerDefaultState,filter)=>{
+   
     switch(filter.type){ 
-        case 'SET_TITLE_FILTER':
+        case 'SET_TEXT_FILTER':
             return{
                 ...state,
-                title:filter.title
+                text:filter.text
             }    
         case 'SEARCH_BY_TITLE':
             return{

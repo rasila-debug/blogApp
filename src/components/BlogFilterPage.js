@@ -1,22 +1,22 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {setTitleFilter,searchByTitle,searchByAuthor} from '../actions/blogFilterAction';
+import {setTextFilter,searchByTitle,searchByAuthor} from '../actions/blogFilterAction';
 
-export const BlogFilterPage =({setTitleFilter,searchByTitle,searchByAuthor,filters,uid}) =>{
+class BlogFilterPage extends React.Component{
 
-   const onTextChange =(e)=>{
-        setTitleFilter(e.target.value);
+    onTextChange =(e)=>{
+        this.props.dispatch(setTextFilter(e.target.value))
     }
-   const onSortChange =(e) =>{
+    onSortChange =(e) =>{
         if(e.target.value === 'title'){          
-            searchByTitle();
+           this.props.dispatch(searchByTitle());
         }else if(e.target.value === 'author'){
-            searchByAuthor();
+            this.props.dispatch(searchByAuthor());
         }
            
     }
-   
+    render(){
         return( 
             <div className="content-container">                 
                 <div className="input-group">              
@@ -25,22 +25,22 @@ export const BlogFilterPage =({setTitleFilter,searchByTitle,searchByAuthor,filte
                             className="text-input" 
                             placeholder="Search Post"
                             type="text" 
-                            value={filters.title}
-                            onChange={onTextChange}
+                            value={this.props.filters.text}
+                            onChange={this.onTextChange}
                         />
                     </div>
                     <div className="input-group__item">
                         <select 
                             className="select"
-                            onChange={onSortChange}
-                            value={filters.searchBy}
+                            onChange={this.onSortChange}
+                           
                         >
                             <option value="title">Title</option>
                             <option value="author">Author</option>
                         </select>
                 </div>                
                     <div className="input-group__item">                           
-                            {!!uid ? 
+                            {!!this.props.uid ? 
                                 <Link className="button" to="/create">Add Post</Link> :
                                 <span></span>                              
                             }
@@ -48,18 +48,13 @@ export const BlogFilterPage =({setTitleFilter,searchByTitle,searchByAuthor,filte
                 </div>                    
             </div>
         );
-
+    }
 }
+
 
 const mapStateToProps =(state) =>({
     filters:state.filters,
     uid:state.auth.uid
 });
 
-const mapDispatchToProps =(dispatch) =>({
-    setTitleFilter:(title) =>dispatch(setTitleFilter(title)),
-    searchByTitle:()=>dispatch(searchByTitle()),
-    searchByAuthor:()=>dispatch(searchByAuthor())
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(BlogFilterPage);
+export default connect(mapStateToProps)(BlogFilterPage);

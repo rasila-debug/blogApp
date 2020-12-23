@@ -15,7 +15,7 @@ export const BlogListItem =({id,title,body,author,createdAt,uid,authID}) =>(
                 <span>{` ${moment(createdAt).format('MMMM Do, YYYY')}.`}</span>         
             </div>            
            <div> 
-                
+             
                {(authID === uid)? <Link className="button" to={`/edit/${id}`}>Edit</Link> :''}
            </div>    
              

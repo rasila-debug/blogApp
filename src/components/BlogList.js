@@ -1,7 +1,7 @@
 import React,{ useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import BlogListItem from './BlogListItem';
-import SelectFilterBlog from '../selectors/blog';
+import {SelectFilterBlog} from '../selectors/blog';
 import ReactPaginate from 'react-paginate';
 
 export const BlogList =(props)=>{
@@ -36,9 +36,7 @@ export const BlogList =(props)=>{
        receivedData(); 
     },[currentPage,props.blogs])  
 
-    return(   
-       
-               
+    return(    
             <div className="content-container">          
             { 
                 (data.length === 0) ?( 
@@ -46,7 +44,7 @@ export const BlogList =(props)=>{
                     <span>No Post</span>
                    </div>
                 ):( 
-                        data.map((blog) =>{                 
+                        data.map((blog) =>{  
                         return <BlogListItem key={blog.id}  {...blog} authID={props.authID} />
                     })
                 )

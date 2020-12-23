@@ -4,11 +4,11 @@ import BlogForm from './BlogForm';
 import {startUpdateBlog,startRemoveBlog} from '../actions/blogAction';
 import DeletePostModal from './DeletePostModal';
 import BackToDashboard from './BackToDashboard';
-
 export class EditBlogPage extends React.Component{
-    state ={
-        showModal:undefined
-      }; 
+    
+     state={
+      showModal:undefined
+     }
       handleOpenModal = () => {
         this.setState({ showModal: true });
       }
@@ -22,7 +22,8 @@ export class EditBlogPage extends React.Component{
       onRemove = () => {
           this.props.startRemoveBlog({ id: this.props.blog.id });
           this.props.history.push('/');
-        };
+      };
+     
     render(){
       return(
         <div className="content-container">
@@ -32,7 +33,7 @@ export class EditBlogPage extends React.Component{
                     <BackToDashboard/>
                     </div>                    
             </div>
-            <div >
+            <div>
               <BlogForm onSubmit={this.onSubmit} {...this.props.blog} />
               <button className="button" onClick={this.handleOpenModal}>Delete Post</button>
             <DeletePostModal 
@@ -47,7 +48,7 @@ export class EditBlogPage extends React.Component{
 
 }
 const mapStateToProps = (state, props) => ({
-  blog: state.blogs.find((blog) => blog.id === props.match.params.id)
+    blog: state.blogs.find((blog) => blog.id === props.match.params.id)
 });
 
 const mapDispatchToProps = (dispatch, props) => ({

@@ -1,15 +1,16 @@
 
-export default (blogs,{title='',searchBy='title'})=>{
-    return blogs.filter((blog) =>{         
-            if(searchBy === 'title'){  
-                const titleMatch =blog.title.toLowerCase().includes(title.toLowerCase().trim());              
-                return titleMatch;
-            }
-            else if(searchBy === 'author'){               
-                const authorMatch= blog.author.toLowerCase().includes(title.toLowerCase().trim());
-                return authorMatch;
-            }
-    }).sort((a,b) =>{
-        return a.createdAt < b.createdAt ? 1 : -1;
-    })
+export const SelectFilterBlog =(blogs,{text='',searchBy})=>{
+
+return blogs.filter((blog) =>{   
+  if(searchBy === 'title'){  
+      const titleMatch =blog.title.toLowerCase().includes(text.toLowerCase().trim());              
+      return titleMatch;
+  }
+  else if(searchBy === 'author'){               
+      const authorMatch= blog.author.toLowerCase().includes(text.toLowerCase().trim());
+      return authorMatch;
+  }
+  }).sort((a,b) =>{
+  return a.createdAt < b.createdAt ? 1 : -1;
+  })
 }

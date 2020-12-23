@@ -12,9 +12,9 @@ export const startAddBlog =(blogData={})=>{
     return (dispatch,getState)=>{
         const uid =getState().auth.uid;
         const {title ='',body='',author='',createdAt=0}=blogData;
-        const blog={title,body,author,createdAt,uid};
+        const blog={title,body,author,createdAt};
        
-       database.ref('blogs').push(blog).then((ref)=>{      
+       database.ref(`users/${uid}/blogs`).push(blog).then((ref)=>{      
             return dispatch(addBlog({
                 id:ref.key,
                 ...blog
@@ -32,8 +32,8 @@ export const removeBlog =({id}={}) =>({
 
 export const startRemoveBlog =({id}={}) =>{
     return(dispatch,getState) =>{
-     
-        return database.ref(`blogs/${id}`).remove().then(()=>{
+        const uid =getState().auth.uid;
+        return database.ref(`users/${uid}/blogs/${id}`).remove().then(()=>{
             dispatch(removeBlog({id}));
         });
     }
@@ -48,7 +48,8 @@ export const editBlog =(id,updates)=>({
 
 export const startUpdateBlog = (id,updates)=>{
     return(dispatch,getState) =>{ 
-       return database.ref(`blogs/${id}/`).update(updates).then(()=>{
+        const uid = getState().auth.uid; 
+       return database.ref(`users/${uid}/blogs/${id}`).update(updates).then(()=>{
             dispatch(editBlog(id,updates));
         });
     }
@@ -67,16 +68,25 @@ export const startUserBlog = () =>{
         let query="";
         const ref =database.ref();
 
-        query = ref.child('blogs').once('value');
+        query = ref.child('users').once('value');
         return query.then((snapshot) => {
             const posts = [];
+            const blogList =[];
             snapshot.forEach((childSnapshot) => {
                 posts.push({
                     id : childSnapshot.key,
                     ...childSnapshot.val()
                 })
+                
             })
-            dispatch(listBlog(posts));
+            posts.filter(({id,blogs})=>{
+            Object.entries(blogs).filter((blog)=>{
+                blogList.push({id:blog[0],...blog[1],uid:id})
+                })
+            
+           })
+           //console.log(blogList)
+            dispatch(listBlog(blogList));
         })
     };
 
