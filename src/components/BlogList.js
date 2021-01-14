@@ -5,13 +5,13 @@ import {SelectFilterBlog} from '../selectors/blog';
 import ReactPaginate from 'react-paginate';
 
 export const BlogList =(props)=>{
+   
     const postData=props.blogs;  
     const [data,setData]=useState([]);
     const [offset,setOffset] =useState(0);
-    const [perPage,setPerpage]=useState(3);
+    const [perPage,setPerpage]=useState(5);
     const [currentPage,setCurrentPage]=useState(0);
     const [pageCount,setPageCount]=useState(0);
-   
     
     const receivedData=()=>{
         let slice=[];
@@ -32,7 +32,7 @@ export const BlogList =(props)=>{
         setCurrentPage(selectedPage);
         setOffset(offset);             
     }
-    useEffect(()=>{       
+    useEffect(()=>{
        receivedData(); 
     },[currentPage,props.blogs])  
 
@@ -45,7 +45,7 @@ export const BlogList =(props)=>{
                    </div>
                 ):( 
                         data.map((blog) =>{  
-                        return <BlogListItem key={blog.id}  {...blog} authID={props.authID} />
+                        return <BlogListItem key={blog.id}  {...blog} authID={props.authID}/>
                     })
                 )
                 
@@ -69,7 +69,7 @@ export const BlogList =(props)=>{
 }
 const mapStateToProps =(state) =>({    
     blogs:SelectFilterBlog(state.blogs,state.filters),
-    authID:state.auth.uid 
+    authID:state.auth.uid
 });
 
 export default connect(mapStateToProps)(BlogList);

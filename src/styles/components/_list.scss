@@ -1,12 +1,11 @@
 
-
 .list-item {
     border: 1px solid darken($off-white, 7%);
     border-radius:$radius;
     background:white;   
     display: block;
-    flex-direction: column;    
-    padding: $s-size;
+    flex-direction: column;
+    padding:0 $s-size $s-size $s-size;    
     text-decoration: none;
     transition: background .3s ease; 
     margin-bottom: $m-size;
@@ -15,7 +14,7 @@
       margin-bottom: $m-size;
       flex-direction: row;
       justify-content: space-between;      
-      padding: $s-size;
+      padding:0 $s-size $s-size $s-size;
     }
   }
   .list-item--message {
@@ -33,7 +32,7 @@
     word-break: break-all;
     text-decoration: none;
     &:hover {
-      color: $lime-green;
+      color: $blue;
     }
   }
   .list-item__data {

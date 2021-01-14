@@ -4,6 +4,7 @@ import BlogForm from './BlogForm';
 import {startUpdateBlog,startRemoveBlog} from '../actions/blogAction';
 import DeletePostModal from './DeletePostModal';
 import BackToDashboard from './BackToDashboard';
+
 export class EditBlogPage extends React.Component{
     
      state={

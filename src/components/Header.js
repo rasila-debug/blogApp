@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+
 import {connect} from 'react-redux';
 import LoginModal from './LoginModal';
 import {startLogout} from '../actions/auth';
@@ -18,7 +18,7 @@ export class Header extends React.Component{
     render(){
         return(
         <header className="header">
-                <div className="header__content">
+                <div className="header__content content-container">
                 <div className="logo">  </div>               
                     { !!this.props.uid ?
                             (
@@ -33,7 +33,7 @@ export class Header extends React.Component{
                     }
                     
                 </div>
-                <LoginModal loginpopup={this.state.loginPrompt} handleCloseLoginModal={this.handleCloseLoginModal}/>
+                <LoginModal loginpopup={this.state.loginPrompt} handleCloseLoginModal={this.handleCloseLoginModal} tagline={'Welcome MyBlog'}/>
          </header>
         );
     }

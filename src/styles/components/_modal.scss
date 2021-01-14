@@ -22,7 +22,7 @@
     background:white;
     border: 1px solid #cacccd;
     border-radius: $radius;
-    max-width: 50rem;
+    max-width: 60rem;
     padding: $s-size;
     text-align: center;
     outline: none;
@@ -44,11 +44,10 @@
   .modal__header{
     justify-content:center;
     display: flex;
-  
     position: relative;
   }
   .modal__title {
-    margin: 0 0 $m-size 0;
+    margin: $l-size 0 $l-size 0;
   }
   
   .modal__body {
@@ -124,4 +123,4 @@
     width: 20px;   
     vertical-align: middle;    
   }
- 
+  

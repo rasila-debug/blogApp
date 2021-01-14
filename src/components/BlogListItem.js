@@ -5,25 +5,30 @@ import trimPost from '../selectors/trimPost';
 
 
 
-export const BlogListItem =({id,title,body,author,createdAt,uid,authID}) =>(
-      
-        <div className="list-item">
-            <Link className="list-item__title" to={`read/${id}`}><h3>{title}</h3></Link>
-            <div className="list-item__data">{trimPost(body)}</div>
-            <div className="list-item__sub-title"> Posted By
-                <span>{` ${author} `}</span>on
-                <span>{` ${moment(createdAt).format('MMMM Do, YYYY')}.`}</span>         
-            </div>            
-           <div> 
-             
-               {(authID === uid)? <Link className="button" to={`/edit/${id}`}>Edit</Link> :''}
-           </div>    
-             
-        </div>
-       
+export const BlogListItem =(props) =>{
+    const blog = {...props}
+    return(
+            <div className="list-item">
+                
+                <Link className="list-item__title" to={{pathname:`read/${blog.id}`,
+                                                        blogData:{...blog}}}><h3>{blog.title}</h3></Link>
+                <div className="list-item__data">{trimPost(blog.body)}</div>
+                <div className="list-item__sub-title"> Posted By
+                    <span>{` ${blog.author} `}</span>on
+                    <span>{` ${moment(blog.createdAt).format('MMMM Do, YYYY')}.`}</span>   
+                </div>            
+               <div> 
+                   {(blog.authID === blog.uid)?<Link className="button" to={`/edit/${blog.id}`}>Edit</Link> :''}
+                  
+               </div>    
+               
+            </div>
            
-    
-);
+               
+        
+    );
+}
+
 
 
 export default BlogListItem;

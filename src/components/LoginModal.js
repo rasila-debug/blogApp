@@ -90,9 +90,8 @@ onFacebooklogin = ()=>{
             className='modal'           
            >
             <div className="modal__header">
-                 <div className="logo">  </div>
-                
                  <button className="modal__cross_btn" onClick={this.props.handleCloseLoginModal}>X</button>
+                 <p className='tagline'>{this.props.tagline}</p> 
              </div>
              <div className="modal__body">
             <div className="box-layout__box">
@@ -107,7 +106,7 @@ onFacebooklogin = ()=>{
               
                 
            
-            <h3 className='modal__title'>Sign in or Sign up with email</h3> 
+            <h4 className='modal__title'>Sign in or Sign up with email</h4> 
             {this.state.error !=='' ?<p className="modal__form-error">{this.state.error}</p>:''}
                
                     <select className="modal__select" onChange={this.onModeChange}>
@@ -125,10 +124,7 @@ onFacebooklogin = ()=>{
                                   />
                        
                         <button className='modal_button'>
-                           
                             {this.state.mode === 'SIGNIN' ?'Continue':'Create account'}
-                                
-                            
                         </button>
                        
                     </form>
@@ -152,15 +148,7 @@ onFacebooklogin = ()=>{
                         <h4 className='modal__title'>Check your inbox</h4>
                         <span>Click the verification link we just sent</span>
                         <span>Email :{this.state.email}</span> 
-                    </div>        
-                          
-               
-                      
-                       
-                        
-                        
-                      
-                        
+                    </div>   
                       
             </Modal>
         </div>

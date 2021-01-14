@@ -11,7 +11,7 @@ import './styles/styles.scss';
 
 import LoadingPage from './components/LoadingPage';
 import {startUserBlog} from './actions/blogAction';
-
+import {bookmarkById} from './actions/bookmarkAction';
 const store =configureStore();
 
 const jsx = (
@@ -33,7 +33,7 @@ firebase.auth().onAuthStateChanged((user) =>{
     if(user){ 
         if(user.emailVerified){  
             const userName = user.displayName === null ? 'User' : user.displayName;
-            store.dispatch(login(user.uid,userName));     
+            store.dispatch(login(user.uid,userName));
          } 
     }
     else{     

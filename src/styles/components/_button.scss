@@ -2,9 +2,9 @@
 .button {	
 	background: white;
 	border-radius:$radius;
-	border:1px solid $lime-green;
+	border:1px solid $blue;
 	cursor:pointer;
-	color:$lime-green;
+	color:$blue;
 	display:inline-block;
 	font-size:$font-size-medium;
 	font-weight: 700;
@@ -21,7 +21,7 @@
 }    
 .button--link{
     background: none;
-    color:$lime-green;
+    color:$blue;
 	border:none;
 	font-weight: 700;
     font-size:$font-size-large;

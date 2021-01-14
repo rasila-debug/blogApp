@@ -8,16 +8,15 @@ export const addBlog =(blog)=>({
 });
 
 export const startAddBlog =(blogData={})=>{
-   
     return (dispatch,getState)=>{
         const uid =getState().auth.uid;
         const {title ='',body='',author='',createdAt=0}=blogData;
         const blog={title,body,author,createdAt};
-       
        database.ref(`users/${uid}/blogs`).push(blog).then((ref)=>{      
             return dispatch(addBlog({
                 id:ref.key,
-                ...blog
+                ...blog,
+                uid
             }));
            
         });
@@ -61,6 +60,11 @@ export const listBlog = (blogs) =>({
     type:'LIST_BLOG',
     blogs
 });
+//BOOKMARK_LIST
+export const listBookmark =(bookmarks) =>({
+    type:'LIST_BOOKMARK',
+    bookmarks
+})
 
 export const startUserBlog = () =>{
     return (dispatch,getState) => { 
@@ -79,13 +83,23 @@ export const startUserBlog = () =>{
                 })
                 
             })
-            posts.filter(({id,blogs})=>{
+           
+            const bookmark =[];
+           
+            posts.filter(({id,blogs,bookmarks})=>{
             Object.entries(blogs).filter((blog)=>{
                 blogList.push({id:blog[0],...blog[1],uid:id})
                 })
-            
+                if(bookmarks){
+                    Object.entries(bookmarks).filter((bm)=>{
+                        if(id === uid){
+                            bookmark.push({id:bm[0],val:bm[1]})
+                        }
+                    })
+                }
+           
            })
-           //console.log(blogList)
+           dispatch(listBookmark(bookmark))
             dispatch(listBlog(blogList));
         })
     };
