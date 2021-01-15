@@ -22,14 +22,17 @@
     background:white;
     border: 1px solid #cacccd;
     border-radius: $radius;
-    max-width: 60rem;
-    padding: $s-size;
+    max-width:40rem;
     text-align: center;
     outline: none;
+    @media (min-width:$desktop-breakpoint) {      
+      max-width: 60rem;
+      padding: $s-size;
+    }
   }
   .alertModal{
     @extend .modal;
-    padding: $l-size; 
+    padding: $s-size;
     button{
       top:-15px;
       right:-15px
@@ -38,6 +41,9 @@
       display: block;
       font-size: $font-size-medium;
       margin: $s-size 0px;
+    }
+    @media (min-width:$desktop-breakpoint) {      
+      padding: $l-size; 
     }
   }
 

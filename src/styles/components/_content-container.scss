@@ -1,4 +1,7 @@
 .content-container{
-    margin: 0 65px;
-    padding: 0 $xl-size;   
+    margin: 0 $s-size;
+    @media (min-width:$desktop-breakpoint) {        
+        margin: 0 65px;
+        padding: 0 $xl-size;
+    }
 }

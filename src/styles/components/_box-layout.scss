@@ -22,10 +22,14 @@ div.logo{
     border-radius:$radius;
     display: flex;
     flex-direction: column;
-    padding:$l-size;
+    padding: $s-size;
     text-align: center;
-    width:50rem;
-   
+    width:35rem;
+    @media (min-width:$desktop-breakpoint) {      
+        width:50rem;
+       
+        padding:$l-size;
+      }
 }
 
 .box-layout__title{
